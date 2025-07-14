@@ -1,0 +1,4 @@
+# packages.txt
+tesseract-ocr
+libtesseract-dev
+poppler-utils
