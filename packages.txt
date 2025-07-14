@@ -1,4 +1,4 @@
-# packages.txt
+# packages.txt (fixed)
 tesseract-ocr
 libtesseract-dev
 poppler-utils
