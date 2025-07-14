@@ -170,27 +170,43 @@ if app_mode == "Dashboard":
 
 # ... [rest of the modules use the same has_data() check] ...
 
-# Example for Accounting Automation module:
+# Module: Accounting Automation
 elif app_mode == "Accounting Automation":
     st.header("🧾 Accounting Automation Center")
     col1, col2 = st.columns(2)
     
     with col1:
         st.subheader("Data Processing")
-        # FIXED: Use explicit check
+        # FIXED: Proper indentation added
         if has_data(st.session_state.uploaded_data) and isinstance(st.session_state.uploaded_data, pd.DataFrame):
-            # Processing code remains the same
+            st.session_state.processed_data = detect_anomalies(st.session_state.uploaded_data)
+            st.dataframe(st.session_state.processed_data)
+            
+            if 'Anomaly' in st.session_state.processed_data.columns:
+                anomalies = st.session_state.processed_data[st.session_state.processed_data['Anomaly']]
+                st.session_state.anomalies = anomalies
+                st.warning(f"Detected {len(anomalies)} anomalous transactions")
+                st.dataframe(anomalies)
         else:
             st.info("Upload transaction data for processing")
     
     with col2:
         st.subheader("Lease Abstraction")
-        # FIXED: Use explicit check
+        # FIXED: Proper indentation added
         if has_data(st.session_state.uploaded_data) and isinstance(st.session_state.uploaded_data, dict):
-            # Processing code remains the same
+            lease_text = st.session_state.uploaded_data.get('text', '')
+            if lease_text:
+                st.session_state.lease_terms = extract_lease_terms(lease_text)
+                st.json(st.session_state.lease_terms)
+                
+                st.subheader("ASC 842 Compliance Check")
+                compliance = check_asc_842_compliance(st.session_state.lease_terms)
+                st.session_state.compliance_results = compliance
+                st.json(compliance)
+            else:
+                st.info("No text extracted from document")
         else:
             st.info("Upload lease document for analysis")
-
 # ... [apply similar fixes to all other modules] ...
 
 # Footer remains the same
