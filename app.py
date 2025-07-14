@@ -127,7 +127,7 @@ st.set_page_config(
 )
 
 # Main App
-st.title("🚀 FinSight - AI-Powered Financial Intelligence")
+st.title("FinSight - AI-Powered Financial Intelligence")
 st.markdown("### Unified platform for accounting, actuarial science, and banking professionals")
 
 # Navigation
